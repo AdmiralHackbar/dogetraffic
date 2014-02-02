@@ -62,9 +62,10 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
+SETTINGS_PATH = os.path.normpath(os.path.dirname(__file__))
+# Find templates in the same folder as settings.py.
 TEMPLATE_DIRS = (
-    os.path.join('templates'),
+    os.path.join(os.path.abspath(os.path.join(SETTINGS_PATH, os.pardir)), 'templates'),
 )
 
 # Internationalization
