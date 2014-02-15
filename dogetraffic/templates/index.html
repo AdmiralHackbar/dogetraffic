@@ -2,8 +2,125 @@
 <html>
 <head>
     <title>dogetraffic</title>
+    <style>
+        #footer {
+            text-align: center;
+        }
+        #images {
+            text-align: center;
+        }
+        #phrases {
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .red {
+            color: red;
+        }
+        .yellow {
+            color: yellow;
+        }
+        .green {
+            color: green;
+        }
+        .blue {
+            color: deepskyblue;
+        }
+        .phrase {
+            font-weight: bold;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            font-size: larger;
+        }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <meta property="og:title" content="dogetaffic"/>
+    <meta property="og:description" content="so accidents. wow."/>
 </head>
 <body>
-    <h1 style="text-align: center">dogetraffic</h1>
+    <div id="main">
+        <div id="images">
+        </div>
+        <div id="footer">
+            Traffic data provided by MapQuest
+            - <a href="https://github.com/AdmiralHackbar/dogetraffic">on github</a>
+        </div>
+        <div id="phrases">
+
+        </div>
+    </div>
 </body>
+<script type="text/javascript">
+    var width = $(window).width()
+    var height = $(window).height()
+    $('#images').html('<img src="/dogetraffic/map_image?w=' + width + '&h=' + height + '"/>')
+
+    var data = JSON.parse('{{ json |safe}}');
+    var mainElement = document.getElementById("main");
+    var severity = 0;
+    var descs = []
+    for (var i = 0; i < data.incidents.length; i++) {
+        severity += data.incidents[i].severity;
+        descs.push(data.incidents[i].shortDesc);
+    }
+
+    var phrases = ["wow"];
+    if (severity == 0) {
+        phrases.push("such clear");
+        phrases.push("so amaze");
+        phrases.push('wow no accidents');
+        phrases.push("much vroom vroom");
+        phrases.push("so fast");
+        phrases.push("wow")
+    } else if (severity < 15) {
+        phrases.push("wow few accidents");
+        phrases.push("pretty clear")
+        phrases.push("so amaze")
+        phrases.push("wow")
+    } else if (severity < 30) {
+        phrases.push("wow some accidents");
+        phrases.push("so amaze")
+        phrases.push("not so clear")
+        phrases.push("wow")
+        phrases.push("so slow")
+    } else {
+        phrases.push("wow so bad")
+        phrases.push("many accident")
+        phrases.push("so slow")
+        phrases.push("such crawl")
+    }
+
+
+    var colorClasses = ['red', 'yellow', 'green', 'blue'];
+    var index = 0;
+    function displayPhrase() {
+        index++;
+        if (index >= phrases.length) {
+            index = 0;
+        }
+
+        var w = Math.max(80, Math.random() * width - 80);
+        var h = Math.max(80, Math.random() * height - 80);
+        var colorIndex = Math.round(Math.random() * 3);
+        var newDiv = document.createElement('div');
+        newDiv.setAttribute('class', "phrase " + colorClasses[colorIndex]);
+        newDiv.setAttribute('style', 'position: absolute; left: ' + w + 'px; top: ' + h + 'px');
+
+        var newImg = document.createElement("img");
+        newImg.setAttribute("src", "http://i.imgur.com/X866Ifi.png")
+        newDiv.appendChild(newImg);
+        var newSpan = document.createElement('span');
+        newSpan.innerHTML = phrases[index];
+        newDiv.appendChild(newSpan);
+        $('#phrases').append(newDiv)
+
+        if ($('.phrase').length > 5) {
+            $('#phrases').find("div:first-child").remove();
+        }
+
+        setTimeout("displayPhrase()", 2000);
+    }
+    displayPhrase();
+
+</script>
 </html>

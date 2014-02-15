@@ -5,6 +5,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
+    url(r'^dogetraffic/map_image', 'app.views.map', name='map image'),
     url(r'^dogetraffic/', 'app.views.index', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
