@@ -27,6 +27,9 @@
         .blue {
             color: deepskyblue;
         }
+        .purple {
+            color: purple;
+        }
         .phrase {
             font-weight: bold;
             font-family: "Comic Sans MS", cursive, sans-serif;
@@ -82,7 +85,6 @@
         phrases.push("so amaze")
         phrases.push("not so clear")
         phrases.push("wow")
-        phrases.push("so slow")
     } else {
         phrases.push("wow so bad")
         phrases.push("many accident")
@@ -91,7 +93,7 @@
     }
 
 
-    var colorClasses = ['red', 'yellow', 'green', 'blue'];
+    var colorClasses = ['red', 'yellow', 'green', 'blue', 'purple'];
     var index = 0;
     function displayPhrase() {
         index++;
@@ -101,7 +103,7 @@
 
         var w = Math.max(80, Math.random() * width - 80);
         var h = Math.max(80, Math.random() * height - 80);
-        var colorIndex = Math.round(Math.random() * 3);
+        var colorIndex = Math.round(Math.random() * 4);
         var newDiv = document.createElement('div');
         newDiv.setAttribute('class', "phrase " + colorClasses[colorIndex]);
         newDiv.setAttribute('style', 'position: absolute; left: ' + w + 'px; top: ' + h + 'px');
